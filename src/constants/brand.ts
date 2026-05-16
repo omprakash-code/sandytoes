@@ -1,0 +1,16 @@
+export const BRAND = {
+  name: "Sandy Toes",
+  legalName: "Sandy Toes Bahamas Luxury Rentals",
+  tagline: "Bahamas luxury rentals",
+  propertyName: "Treasure Cay Villa",
+  location: "Treasure Cay, Abaco, Bahamas",
+  phoneDisplay: "+1 242 808 5536",
+  phoneHref: "+12428085536",
+  whatsappNumber: "12428085536",
+  email: "stay@sandytoesrentals.com",
+  logoPath: "/assets/Logo-transparent.png",
+  websiteUrl: "https://sandytoes.buildom.in",
+  instagramUrl: "https://www.instagram.com/",
+  facebookUrl: "https://www.facebook.com/",
+  youtubeUrl: "https://www.youtube.com/",
+} as const;
