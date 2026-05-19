@@ -44,12 +44,11 @@ export default function VillaBookingHeader({
 
         <nav className="hidden items-center rounded-full border border-slate-200 bg-transparent px-2 py-2 md:flex">
           {navItems.map((item) => {
-            const isActive =
-              active === "villa" && item.href === "/villa-details";
+            const isActive = active === "villa" && item.label === "Villa Details";
 
             return (
               <Link
-                key={item.href}
+                key={item.label}
                 href={item.href}
                 className={`rounded-full px-5 py-3 font-serif text-lg leading-none transition ${
                   isActive

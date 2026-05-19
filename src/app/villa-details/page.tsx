@@ -8,20 +8,14 @@ import {
   Car,
   ChefHat,
   Check,
-  ChevronLeft,
   ChevronRight,
-  FileText,
   Fish,
   Flag,
   Flame,
-  Heart,
-  Images,
   MapPin,
   Palmtree,
   Plane,
-  PlayCircle,
   ShieldCheck,
-  Share2,
   Star,
   Users,
   Waves,
@@ -32,6 +26,7 @@ import BookingCard from "@/components/pages/villa-details/BookingCard";
 import EditorialGallery, {
   type EditorialGalleryItem,
 } from "@/components/pages/villa-details/EditorialGallery";
+import HeroGalleryCarousel from "@/components/pages/villa-details/HeroGalleryCarousel";
 import VillaBookingHeader from "@/components/pages/villa-details/VillaBookingHeader";
 import { BRAND } from "@/constants/brand";
 
@@ -242,174 +237,7 @@ const faqs = [
 ];
 
 function HeroGallery() {
-  return (
-    <section className="px-4 pb-5 pt-5 md:px-8 md:pt-6 lg:pb-8">
-      <div className="mx-auto max-w-7xl">
-        <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-          <nav className="flex flex-wrap items-center gap-2 text-sm">
-            <Link href="/" className="font-medium text-[#0c7772] hover:underline">
-              Home
-            </Link>
-            <ChevronRight className="h-4 w-4 text-slate-400" />
-            <Link href="/villa-details" className="font-medium text-[#0c7772] hover:underline">
-              Villas in Treasure Cay
-            </Link>
-            <ChevronRight className="h-4 w-4 text-slate-400" />
-            <span className="text-slate-700">{BRAND.propertyName}</span>
-          </nav>
-
-          <button
-            type="button"
-            className="inline-flex h-11 w-fit items-center gap-2 bg-white px-4 text-sm font-semibold text-slate-800 shadow-sm ring-1 ring-[#f3a2a5] transition hover:bg-[#fff7f7]"
-          >
-            <FileText className="h-4 w-4 text-[#ea7e82]" />
-            View Brochure
-          </button>
-        </div>
-
-        <div className="mt-5">
-          <div className="grid gap-2 md:h-[560px] md:grid-cols-[minmax(0,1fr)_168px]">
-            <div className="relative min-h-[420px] overflow-hidden bg-slate-200 shadow-[0_18px_54px_rgba(6,30,31,0.12)] md:min-h-0">
-              <Image
-                src={images.hero}
-                alt="Sandy Toes villa and beach setting"
-                fill
-                priority
-                sizes="(min-width: 1024px) 62vw, 100vw"
-                className="object-cover"
-              />
-              <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-black/35 to-transparent" />
-              <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-black/45 to-transparent" />
-
-              <div className="absolute left-5 top-5 bg-white/92 px-4 py-2 text-sm font-semibold text-slate-900 shadow-sm backdrop-blur">
-                Best Rated Villa
-              </div>
-              <div className="absolute right-5 top-5 flex gap-3">
-                <button
-                  type="button"
-                  aria-label="Share property"
-                  className="flex h-11 w-11 items-center justify-center bg-white/92 text-slate-900 shadow-md backdrop-blur transition hover:bg-white"
-                >
-                  <Share2 className="h-5 w-5" />
-                </button>
-                <button
-                  type="button"
-                  aria-label="Save property"
-                  className="flex h-11 w-11 items-center justify-center bg-white/92 text-slate-900 shadow-md backdrop-blur transition hover:bg-white"
-                >
-                  <Heart className="h-5 w-5" />
-                </button>
-              </div>
-
-              <button
-                type="button"
-                aria-label="Previous image"
-                className="absolute left-5 top-1/2 hidden h-11 w-11 -translate-y-1/2 items-center justify-center bg-white/86 text-slate-950 shadow-md backdrop-blur transition hover:bg-white md:flex"
-              >
-                <ChevronLeft className="h-5 w-5" />
-              </button>
-              <button
-                type="button"
-                aria-label="Next image"
-                className="absolute right-5 top-1/2 hidden h-11 w-11 -translate-y-1/2 items-center justify-center bg-white/86 text-slate-950 shadow-md backdrop-blur transition hover:bg-white md:flex"
-              >
-                <ChevronRight className="h-5 w-5" />
-              </button>
-
-              <div className="absolute bottom-5 left-5 flex flex-wrap gap-3">
-                <button
-                  type="button"
-                  className="inline-flex h-12 items-center gap-2 bg-white px-5 text-sm font-semibold text-slate-950 shadow-lg transition hover:bg-[#f7f5f2]"
-                >
-                  <Images className="h-5 w-5 text-[#0c7772]" />
-                  View All Photos
-                </button>
-                <button
-                  type="button"
-                  className="inline-flex h-12 items-center gap-2 bg-black/35 px-5 text-sm font-semibold text-white ring-1 ring-white/45 backdrop-blur transition hover:bg-black/45"
-                >
-                  <PlayCircle className="h-5 w-5" />
-                  Watch Video
-                </button>
-              </div>
-
-              <div className="absolute bottom-6 right-6 hidden items-center gap-2 bg-black/30 px-3 py-2 backdrop-blur md:flex">
-                {[0, 1, 2, 3].map((item) => (
-                  <span
-                    key={item}
-                    className={`h-1.5 rounded-full ${
-                      item === 0 ? "w-6 bg-white" : "w-1.5 bg-white/55"
-                    }`}
-                  />
-                ))}
-              </div>
-            </div>
-
-            <div className="grid grid-cols-3 gap-2 md:grid-cols-1 md:grid-rows-3">
-              {[
-                [images.hero2, "Private pool and lounge area"],
-                [images.hero3, "Open dining and gathering space"],
-                [images.hero4, "Luxury bedroom suite"],
-              ].map(([src, alt], index) => (
-                <button
-                  key={alt}
-                  type="button"
-                  className="group relative min-h-[110px] overflow-hidden bg-slate-200 shadow-sm md:min-h-0"
-                  aria-label={`Preview ${alt}`}
-                >
-                  <Image
-                    src={src}
-                    alt={alt}
-                    fill
-                    sizes="(min-width: 768px) 168px, 33vw"
-                    className="object-cover transition duration-500 group-hover:scale-105"
-                  />
-                  {index === 2 ? (
-                    <div className="absolute inset-0 flex items-center justify-center bg-black/42 text-center text-white">
-                      <div>
-                        <p className="text-2xl font-semibold">+17</p>
-                        <p className="text-sm font-semibold">More Photos</p>
-                      </div>
-                    </div>
-                  ) : null}
-                </button>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        <nav className="mt-0 overflow-x-auto border-b border-slate-200 bg-white px-5 shadow-sm">
-          <div className="flex min-w-max items-center gap-9 text-sm font-semibold text-slate-600 md:text-base">
-            {[
-              ["Overview", "#overview"],
-              ["Highlights", "#overview"],
-              ["Refund Policy", "#rules"],
-              ["Spaces", "#rooms"],
-              ["Reviews", "#reviews"],
-              ["Amenities", "#amenities"],
-              ["Meals", "#amenities"],
-              ["Location", "#location"],
-              ["Experiences", "#overview"],
-              ["FAQ's", "#reserve"],
-            ].map(([label, href], index) => (
-              <Link
-                key={label}
-                href={href}
-                className={`border-b-2 py-5 transition ${
-                  index === 0
-                    ? "border-[#0c7772] text-[#0c7772]"
-                    : "border-transparent text-slate-700 hover:border-[#0c7772] hover:text-slate-950"
-                }`}
-              >
-                {label}
-              </Link>
-            ))}
-          </div>
-        </nav>
-
-      </div>
-    </section>
-  );
+  return <HeroGalleryCarousel />;
 }
 
 export default function VillaDetailsPage() {
