@@ -9,19 +9,19 @@ import { YoutubeIcon } from "@/components/icons/YoutubeIcon";
 import { BRAND } from "@/constants/brand";
 
 const quickLinks = [
-  { label: "Home", href: "/" },
-  { label: "About Us", href: "/about" },
+  { label: "Home", href: "/villa-details" },
+  { label: "About Us", href: "/villa-details#overview" },
   { label: "Villa Details", href: "/villa-details" },
-  { label: "Gallery", href: "/gallery" },
-  { label: "Contact Us", href: "/contact" },
+  { label: "Gallery", href: "/villa-details#gallery" },
+  { label: "Contact Us", href: "/villa-details#booking" },
 ];
 
 const supportLinks = [
-  { label: "Booking Policy", href: "/booking-policy" },
-  { label: "Cancellation Policy", href: "/cancellation-policy" },
-  { label: "Refund Policy", href: "/refund-policy" },
-  { label: "Privacy Policy", href: "/privacy-policy" },
-  { label: "Terms & Conditions", href: "/terms-and-conditions" },
+  { label: "Booking Policy", href: "/villa-details#rules" },
+  { label: "Cancellation Policy", href: "/villa-details#rules" },
+  { label: "Refund Policy", href: "/villa-details#rules" },
+  { label: "Privacy Policy", href: "/villa-details" },
+  { label: "Terms & Conditions", href: "/villa-details#rules" },
 ];
 
 const socialLinks = [

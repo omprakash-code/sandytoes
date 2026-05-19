@@ -1,117 +1,97 @@
-"use client";
-
-import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
+import { prisma } from "@/lib/db";
+import { formatCents } from "@/lib/villa-booking";
 
-import KpiGrid from "@/components/admin/dashboard/kpi/KpiGrid";
-import RevenueChartCard from "@/components/admin/dashboard/revenue-chart/RevenueChartCard";
-import LiveBookingsCard from "@/components/admin/dashboard/live-bookings/LiveBookingsCard";
-import PageHeader from "@/components/admin/page/PageHeader";
+export default async function AdminDashboardPage() {
+  const [totalBookings, pendingBookings, confirmedBookings, blockedDates, recentBookings] =
+    await Promise.all([
+      prisma.villaBooking.count(),
+      prisma.villaBooking.count({ where: { status: "READY_FOR_PAYMENT" } }),
+      prisma.villaBooking.count({ where: { status: "CONFIRMED" } }),
+      prisma.villaBlock.count(),
+      prisma.villaBooking.findMany({
+        orderBy: { createdAt: "desc" },
+        take: 6,
+      }),
+    ]);
 
-import { getSLA } from "@/lib/admin/sla";
-import type { AdminBooking } from "@/types/admin/booking-admin";
+  const confirmedRevenue = await prisma.villaBooking.aggregate({
+    where: { status: "CONFIRMED" },
+    _sum: { totalCents: true },
+  });
 
-/* -----------------------------
-   Page
------------------------------- */
-export default function AdminDashboardPage() {
-  const [bookings, setBookings] = useState<AdminBooking[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  /* -----------------------------
-     Fetch latest bookings
-  ------------------------------ */
-  useEffect(() => {
-    async function fetchBookings() {
-      try {
-        const res = await fetch("/api/admin/bookings");
-        const json = await res.json();
-
-        if (json.success) {
-          setBookings(json.data);
-        }
-      } catch (error) {
-        console.error("DASHBOARD_BOOKINGS_ERROR", error);
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    fetchBookings();
-  }, []);
-
-  /* -----------------------------
-     Inject SLA (safe for reuse)
-  ------------------------------ */
-  const enrichedBookings = useMemo(() => {
-    return bookings.map((b) => ({
-      ...b,
-      sla: getSLA(b.createdAt),
-    }));
-  }, [bookings]);
+  const cards = [
+    { label: "Total bookings", value: totalBookings },
+    { label: "Pending requests", value: pendingBookings },
+    { label: "Confirmed stays", value: confirmedBookings },
+    { label: "Blocked ranges", value: blockedDates },
+  ];
 
   return (
-    <div className="min-h-screen">
-      {/* Page Container */}
-      <div className="max-w-[1600px] mx-auto">
-        {/* Page Header */}
-        <PageHeader
-          title="Dashboard"
-          description="Business performance overview and operational insights"
-          actions={(
-            <div className="grid w-full grid-cols-2 gap-2 xl:grid-cols-4">
-              <Link
-                href="/admin/bookings?openAddBooking=1"
-                className="inline-flex min-h-10 w-full items-center justify-center rounded-md bg-neutral-900 px-3 py-2 text-center text-sm font-medium leading-tight text-white transition hover:bg-neutral-800 active:scale-[0.98]"
-              >
-                + New Booking
-              </Link>
+    <div className="space-y-6">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <p className="text-sm font-semibold uppercase tracking-[0.16em] text-[#0c7772]">
+            Sandy Toes Admin
+          </p>
+          <h1 className="mt-2 text-3xl font-semibold text-slate-950">Villa booking dashboard</h1>
+        </div>
+        <Link
+          href="/admin/bookings"
+          className="inline-flex h-11 items-center justify-center bg-[#ea7e82] px-5 text-sm font-semibold text-white"
+        >
+          View bookings
+        </Link>
+      </div>
 
-              <Link
-                href="/admin/bookings/abandoned"
-                className="inline-flex min-h-10 w-full items-center justify-center rounded-md border border-slate-300 bg-white px-3 py-2 text-center text-sm font-medium leading-tight text-slate-700 transition hover:bg-slate-50 active:scale-[0.98]"
-              >
-                View Abandonment
-              </Link>
+      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        {cards.map((card) => (
+          <div key={card.label} className="bg-white p-5 ring-1 ring-slate-200">
+            <p className="text-sm text-slate-500">{card.label}</p>
+            <p className="mt-3 text-3xl font-semibold text-slate-950">{card.value}</p>
+          </div>
+        ))}
+      </div>
 
-              <Link
-                href="/admin/slots"
-                className="inline-flex min-h-10 w-full items-center justify-center rounded-md border border-slate-300 bg-white px-3 py-2 text-center text-sm font-medium leading-tight text-slate-700 transition hover:bg-slate-50 active:scale-[0.98]"
-              >
-                Slot Management
-              </Link>
+      <div className="bg-white p-5 ring-1 ring-slate-200">
+        <p className="text-sm text-slate-500">Confirmed revenue</p>
+        <p className="mt-3 text-3xl font-semibold text-slate-950">
+          {formatCents(confirmedRevenue._sum.totalCents ?? 0)}
+        </p>
+      </div>
 
-              <Link
-                href="/admin/coupons"
-                className="inline-flex min-h-10 w-full items-center justify-center rounded-md border border-slate-300 bg-white px-3 py-2 text-center text-sm font-medium leading-tight text-slate-700 transition hover:bg-slate-50 active:scale-[0.98]"
-              >
-                + Create Coupon
-              </Link>
-            </div>
-          )}
-        />
-
-        {/* Full-width Stack */}
-        <div className="mt-6 space-y-4 sm:space-y-5 lg:space-y-6">
-          {/* KPI Cards */}
-          <KpiGrid />
-
-          {/* Revenue Chart */}
-          <RevenueChartCard />
-
-          {/* Latest Bookings */}
-          {loading ? (
-            <div className="bg-white rounded-xl border px-4 py-8 sm:px-5 sm:py-9 lg:px-6 lg:py-10 text-sm text-gray-500">
-              Loading latest bookings…
-            </div>
+      <section className="bg-white ring-1 ring-slate-200">
+        <div className="border-b border-slate-200 p-5">
+          <h2 className="text-xl font-semibold text-slate-950">Recent bookings</h2>
+        </div>
+        <div className="divide-y divide-slate-100">
+          {recentBookings.length === 0 ? (
+            <p className="p-5 text-sm text-slate-500">No villa bookings yet.</p>
           ) : (
-            <LiveBookingsCard
-              data={enrichedBookings}
-              showSLA={false}
-            />
+            recentBookings.map((booking) => (
+              <Link
+                key={booking.id}
+                href={`/admin/bookings?booking=${booking.id}`}
+                className="grid gap-2 p-5 transition hover:bg-[#f7f5f2] md:grid-cols-[1fr_180px_130px]"
+              >
+                <div>
+                  <p className="font-semibold text-slate-950">{booking.bookingRef}</p>
+                  <p className="text-sm text-slate-600">
+                    {booking.guestFirstName} {booking.guestLastName} · {booking.guestEmail}
+                  </p>
+                </div>
+                <p className="text-sm text-slate-600">
+                  {booking.checkIn.toISOString().slice(0, 10)} to{" "}
+                  {booking.checkOut.toISOString().slice(0, 10)}
+                </p>
+                <p className="text-sm font-semibold text-slate-950">
+                  {formatCents(booking.totalCents)}
+                </p>
+              </Link>
+            ))
           )}
         </div>
-      </div>
+      </section>
     </div>
   );
 }

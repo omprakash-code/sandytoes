@@ -53,13 +53,13 @@ export default function GalleryHero() {
 
           <div className="mt-7 flex flex-wrap items-center justify-center gap-3">
             <Link
-              href="/booking"
+              href="/villa-details#booking"
               className="rounded-full bg-[#FFD700] px-5 py-2.5 text-sm font-semibold text-black transition hover:bg-[#FFD700]/30"
             >
               Book Your Slot
             </Link>
             <Link
-              href="/contact"
+              href="/villa-details#booking"
               className="rounded-full border border-white/40 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-white/10"
             >
               Plan Custom Event

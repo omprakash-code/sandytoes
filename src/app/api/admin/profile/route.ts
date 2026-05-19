@@ -82,8 +82,8 @@ async function toProfilePayload(
   const isLocked =
     !user.isActive || Boolean(user.lockUntil && user.lockUntil > now);
 
-  const totalBookingsManaged = await prisma.booking.count({
-    where: { createdByAdminId: user.id },
+  const totalBookingsManaged = await prisma.villaAdminNote.count({
+    where: { adminId: user.id },
   });
 
   return {

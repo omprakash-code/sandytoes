@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { BOOKING_ROUTES } from "@/constants/routes";
 
 export default function AboutCTA() {
   return (
@@ -47,13 +46,13 @@ export default function AboutCTA() {
           {/* CTA Buttons */}
           <div className="mt-5 sm:mt-6 lg:mt-8 flex flex-col sm:flex-row items-center justify-center gap-2.5 sm:gap-3 lg:gap-4">
             <Link
-              href={BOOKING_ROUTES.ROOT}
+              href="/villa-details#booking"
               className="inline-flex items-center justify-center px-5 sm:px-6 lg:px-8 py-2.5 sm:py-3 lg:py-3 rounded-full bg-[#FFD700] text-black font-semibold text-[13px] sm:text-sm lg:text-base hover:shadow-xl hover:shadow-[#FFD700]/35 transition-all">
               Start Your Booking
             </Link>
 
             <Link
-              href="/contact"
+              href="/villa-details#booking"
               className="inline-flex items-center justify-center px-5 sm:px-6 lg:px-8 py-2.5 sm:py-3 lg:py-3 rounded-full border border-white/65 text-white font-medium text-[13px] sm:text-sm lg:text-base hover:bg-white/10 hover:border-white transition-all">
               Talk to Our Team
             </Link>

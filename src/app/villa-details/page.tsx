@@ -16,10 +16,8 @@ import {
   Flame,
   Heart,
   Images,
-  Menu,
   MapPin,
   Palmtree,
-  Phone,
   Plane,
   PlayCircle,
   ShieldCheck,
@@ -34,6 +32,7 @@ import BookingCard from "@/components/pages/villa-details/BookingCard";
 import EditorialGallery, {
   type EditorialGalleryItem,
 } from "@/components/pages/villa-details/EditorialGallery";
+import VillaBookingHeader from "@/components/pages/villa-details/VillaBookingHeader";
 import { BRAND } from "@/constants/brand";
 
 export const metadata: Metadata = {
@@ -242,42 +241,6 @@ const faqs = [
   ["Is housekeeping available?", "Housekeeping can be arranged on request. Share your preferred schedule before arrival."],
 ];
 
-function ListingHeader() {
-  return (
-    <header className="sticky top-0 z-50 border-b border-slate-200 bg-white/95 backdrop-blur">
-      <div className="mx-auto flex h-20 max-w-7xl items-center gap-5 px-4 md:px-8">
-        <Link href="/" className="flex shrink-0 items-center">
-          <Image
-            src={BRAND.logoPath}
-            alt={BRAND.name}
-            width={118}
-            height={72}
-            className="h-12 w-[78px] rounded-md object-contain"
-            priority
-          />
-        </Link>
-
-        <div className="ml-auto flex items-center gap-3">
-          <a
-            href={`tel:${BRAND.phoneHref}`}
-            className="hidden h-12 items-center gap-2 rounded-full bg-[#ea7e82] px-5 text-sm font-semibold text-white shadow-[0_10px_24px_rgba(234,126,130,0.24)] transition hover:bg-[#d86f73] md:inline-flex"
-          >
-            <Phone className="h-4 w-4" />
-            Get in touch
-          </a>
-          <button
-            type="button"
-            className="flex h-11 w-11 items-center justify-center rounded-full border border-slate-200 text-slate-700 lg:hidden"
-            aria-label="Open menu"
-          >
-            <Menu className="h-5 w-5" />
-          </button>
-        </div>
-      </div>
-    </header>
-  );
-}
-
 function HeroGallery() {
   return (
     <section className="px-4 pb-5 pt-5 md:px-8 md:pt-6 lg:pb-8">
@@ -452,7 +415,7 @@ function HeroGallery() {
 export default function VillaDetailsPage() {
   return (
     <>
-      <ListingHeader />
+      <VillaBookingHeader />
       <main className="bg-[#f7f5f2] text-slate-950">
         <HeroGallery />
 
@@ -829,7 +792,7 @@ export default function VillaDetailsPage() {
 
             </div>
 
-            <aside className="order-first self-start lg:sticky lg:top-28 lg:order-none">
+            <aside id="booking" className="order-first self-start lg:sticky lg:top-7 lg:order-none">
               <BookingCard compact />
             </aside>
           </div>
@@ -855,7 +818,7 @@ export default function VillaDetailsPage() {
             </p>
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
               <Link
-                href="/booking"
+                href="#booking"
                 className="inline-flex h-14 items-center justify-center rounded-full bg-[#ea7e82] px-8 text-sm font-semibold text-white shadow-[0_20px_42px_rgba(234,126,130,0.34)] transition hover:-translate-y-0.5 hover:bg-[#d86f73]"
               >
                 Reserve Your Stay

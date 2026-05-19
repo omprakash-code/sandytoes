@@ -44,3 +44,6 @@ next-env.d.ts
 
 # runtime uploads (do not commit)
 public/media/admin-uploads/
+
+# local preserved Dazzling Screens code, not part of Sandy Toes commits
+legacy/

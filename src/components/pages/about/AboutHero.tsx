@@ -3,7 +3,6 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { BOOKING_ROUTES } from "@/constants/routes";
 
 export default function AboutHero() {
   return (
@@ -59,14 +58,14 @@ export default function AboutHero() {
           className="mt-7 sm:mt-8 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4"
         >
           <Link
-            href={BOOKING_ROUTES.ROOT}
+            href="/villa-details#booking"
             className="inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 rounded-full bg-[#FFD700] text-black font-semibold text-sm sm:text-base hover:shadow-xl hover:shadow-[#FFD700]/35 transition-all"
           >
             Start Your Celebration
           </Link>
 
           <Link
-            href="/contact"
+            href="/villa-details#booking"
             className="inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 rounded-full border border-white/70 text-white font-medium text-sm sm:text-base hover:bg-white/10 transition-all"
           >
             Talk to Our Team

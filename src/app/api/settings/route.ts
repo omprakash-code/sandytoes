@@ -2,12 +2,15 @@ import { prisma } from "@/lib/db";
 import { NextResponse } from "next/server";
 import {
   ADVANCE_PAYMENT_AMOUNT_KEY,
+  mergeWithKnownAppSettings,
   parseAdvancePaymentAmount,
 } from "@/lib/app-settings";
 
 export async function GET() {
   try {
-    const settings = await prisma.appSetting.findMany();
+    const settings = mergeWithKnownAppSettings(
+      await prisma.appSetting.findMany(),
+    );
 
     const map: Record<string, string> = {};
     for (const s of settings) {
