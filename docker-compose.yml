@@ -1,16 +1,16 @@
 services:
   db:
     image: postgres:16
-    container_name: dazzling-db
+    container_name: sandytoes-db
     restart: always
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: dazzlingscreens
+      POSTGRES_DB: sandytoes
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres -d dazzlingscreens"]
+      test: ["CMD-SHELL", "pg_isready -U postgres -d sandytoes || exit 1"]
       interval: 5s
       timeout: 5s
       retries: 10
@@ -20,7 +20,7 @@ services:
       context: .
       args:
         NEXT_SERVER_ACTIONS_ENCRYPTION_KEY: ${NEXT_SERVER_ACTIONS_ENCRYPTION_KEY:-}
-    container_name: dazzling-app
+    container_name: sandytoes-app
     restart: always
     depends_on:
       db:
@@ -28,9 +28,9 @@ services:
     env_file:
       - .env
     environment:
-      DATABASE_URL: postgresql://postgres:postgres@db:5432/dazzlingscreens
+      DATABASE_URL: postgresql://postgres:postgres@db:5432/sandytoes
     ports:
-      - "3000:3000"
+      - "${APP_PORT:-3001}:3000"
 
 volumes:
   postgres_data:
